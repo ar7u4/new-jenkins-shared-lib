@@ -16,6 +16,8 @@ pipeline{
 
         ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
         SECRET_KEY = credentials('AWS_SECRET_KEY_ID')
+        AWS_DEFAULT_REGION = 'us-east-1'
+        ECR_REPO_URI = '295134731113.dkr.ecr.us-east-1.amazonaws.com/ar7u4'
     }
 
     stages{
@@ -114,6 +116,22 @@ pipeline{
         //        }
         //     }
         // }
+
+           stage('Push to ECR') {
+                steps {
+                    script {
+                        // Get AWS ECR login token
+                        def ecrLogin = sh(script: "aws ecr get-login-password --region ${params.Region}", returnStdout: true).trim()
+                        sh "echo ${ecrLogin} | docker login --username AWS --password-stdin ${ECR_REPO_URI}"
+                        
+                        // Tag the Docker image
+                        sh "docker tag my-docker-image:latest ${ECR_REPO_URI}:latest"
+                        
+                        // Push the Docker image to ECR
+                        sh "docker push ${ECR_REPO_URI}:latest"
+                    }
+                }
+        }
 
     }
 }     
