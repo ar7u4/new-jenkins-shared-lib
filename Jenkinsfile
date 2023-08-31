@@ -36,11 +36,22 @@ pipeline{
         }
         stage('Integration Test maven'){
          
-        ///when { expression {  params.action == 'create' } }
+        // when { expression {  params.action == 'create' } }
 
             steps{
                script{
                     mvnIntegrationTest()
+                }                   
+            }
+        }
+        
+        stage('Static Code Analysis: Sonar'){
+         
+        // when { expression {  params.action == 'create' } }
+
+            steps{
+               script{
+                    statiCodeAnalysis()
                 }                   
             }
         }
