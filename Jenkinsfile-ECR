@@ -123,12 +123,7 @@ pipeline{
                         // Get AWS ECR login token
                         def ecrLogin = sh(script: "aws ecr get-login-password --region ${params.Region}", returnStdout: true).trim()
                         sh "echo ${ecrLogin} | docker login --username AWS --password-stdin ${ECR_REPO_URI}"
-                        
-                        // Tag the Docker image
-                        sh "docker tag my-docker-image:latest ${ECR_REPO_URI}:latest"
-                        
-                        // Push the Docker image to ECR
-                        sh "docker push ${ECR_REPO_URI}:latest"
+                        dockerImagePush("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
                     }
                 }
         }
