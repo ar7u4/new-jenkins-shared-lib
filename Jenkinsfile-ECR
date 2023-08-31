@@ -71,43 +71,43 @@ pipeline{
     //            }
     //         }
     //     }
-        stage('Maven Build : maven'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+        // stage('Maven Build : maven'){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
                    
-                   mvnBuild()
-               }
-            }
-        }
-        stage('Docker Image Build : ECR'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+        //            mvnBuild()
+        //        }
+        //     }
+        // }
+        // stage('Docker Image Build : ECR'){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
                    
-                   dockerBuild("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
-               }
-            }
-        }
-        stage('Push to ECR') {
-            steps {
-                script {
-                        // Get AWS ECR login token
-                        def ecrLogin = sh(script: "aws ecr get-login-password --region ${params.Region}", returnStdout: true).trim()
-                        sh "echo ${ecrLogin} | docker login --username AWS --password-stdin ${ECR_REPO_URI}"
-                        dockerImagePush("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
-                }
-            }
-        }
-        stage('Docker Image Cleanup : ECR '){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+        //            dockerBuild("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
+        //        }
+        //     }
+        // }
+        // stage('Push to ECR') {
+        //     steps {
+        //         script {
+        //                 // Get AWS ECR login token
+        //                 def ecrLogin = sh(script: "aws ecr get-login-password --region ${params.Region}", returnStdout: true).trim()
+        //                 sh "echo ${ecrLogin} | docker login --username AWS --password-stdin ${ECR_REPO_URI}"
+        //                 dockerImagePush("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
+        //         }
+        //     }
+        // }
+        // stage('Docker Image Cleanup : ECR '){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
                    
-                   dockerImageCleanup("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
-               }
-            }
-        }
+        //            dockerImageCleanup("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
+        //        }
+        //     }
+        // }
         stage('Create EKS Cluster : Terraform'){
             when { expression {  params.action == 'create' } }
             steps{
