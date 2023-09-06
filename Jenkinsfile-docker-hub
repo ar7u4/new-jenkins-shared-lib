@@ -50,26 +50,26 @@ pipeline{
             }
         }
         
-        stage('Static Code Analysis: Sonar'){
+        // stage('Static Code Analysis: Sonar'){
          
-        when { expression {  params.action == 'create' } }
+        // when { expression {  params.action == 'create' } }
 
-            steps{
-               script{
-                    statiCodeAnalysis()
-                }                   
-            }
-        }
-        stage('Quality Gate Status Check : Sonarqube'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+        //     steps{
+        //        script{
+        //             statiCodeAnalysis()
+        //         }                   
+        //     }
+        // }
+        // stage('Quality Gate Status Check : Sonarqube'){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
                    
-                   def SonarQubecredentialsId = 'sonar-token-new'
-                   QualityGateStatus(SonarQubecredentialsId)
-               }
-            }
-        }
+        //            def SonarQubecredentialsId = 'sonar-token-new'
+        //            QualityGateStatus(SonarQubecredentialsId)
+        //        }
+        //     }
+        // }
         stage('maven Build: maven'){
          
         when { expression {  params.action == 'create' } }
@@ -153,24 +153,24 @@ pipeline{
             steps{
                 script{
                   
-                  def apply = false
+                //   def apply = false
 
-                  try{
-                    input message: 'please confirm to deploy on eks', ok: 'Ready to apply the config ?'
-                    apply = true
-                  }catch(err){
-                    apply= false
-                    currentBuild.result  = 'UNSTABLE'
-                  }
-                  if(apply){
+                //   try{
+                //     input message: 'please confirm to deploy on eks', ok: 'Ready to apply the config ?'
+                //     apply = true
+                //   }catch(err){
+                //     apply= false
+                //     currentBuild.result  = 'UNSTABLE'
+                //   }
+                //   if(apply){
 
-                    sh """
+                    
                     def kubeConfigFile = readFile('/var/lib/jenkins/.kube/config')
                     kubeConfigFile = kubeConfigFile.replaceAll("apiVersion: client.authentication.k8s.io/v1alpha1", "apiVersion: client.authentication.k8s.io/v1beta1")
                     writeFile(file: '/var/lib/jenkins/.kube/config', text: kubeConfigFile)
-                    kubectl apply -f .
-                    """
-                  }
+                    sh 'kubectl apply -f .'
+                    
+                //   }
                 }
             }
         } 
