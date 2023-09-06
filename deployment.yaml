@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: myjavaapp
-          image: docker.io/ar7u4/javapp:latest
-          ports:
-          - containerPort: 8085
+        image: ar7u4/javapp:latest
+        ports:
+        - containerPort: 8085
 ---
 apiVersion: v1
 kind: Service
