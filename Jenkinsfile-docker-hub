@@ -165,7 +165,10 @@ pipeline{
                   if(apply){
 
                     sh """
-                      kubectl apply -f .
+                    def kubeConfigFile = readFile('/var/lib/jenkins/.kube/config')
+                    kubeConfigFile = kubeConfigFile.replaceAll("apiVersion: client.authentication.k8s.io/v1alpha1", "apiVersion: client.authentication.k8s.io/v1beta1")
+                    writeFile(file: '/var/lib/jenkins/.kube/config', text: kubeConfigFile)
+                    kubectl apply -f .
                     """
                   }
                 }
