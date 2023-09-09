@@ -62,8 +62,8 @@ pipeline{
         failure {
             script {
                 def buildNumber = currentBuild.number
-                def failedStage = currentBuild.currentBuild.displayName
-                def errorMessage = currentBuild.currentBuild.currentResult.toString()
+                def failedStage = currentBuild.displayName
+                def errorMessage = currentBuild.currentResult.toString()
                 emailext (
                     subject: "Build Failure",
                     body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
@@ -71,5 +71,6 @@ pipeline{
                 )
             }
         }
+
     }
 }
