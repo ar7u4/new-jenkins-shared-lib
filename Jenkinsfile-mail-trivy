@@ -50,14 +50,11 @@ pipeline{
     }
     post {
         success {
-            script {
-                def duration = currentBuild.duration
                 emailext (
                     subject: "Build Successful",
                     body: "The build succeeded! It took milliseconds to finish all stages.",
                     to: "arjun.betageri@live.com",
                 )
-            }
         }
         failure {
             emailext to: "arjun.betageri@live.com",
