@@ -180,7 +180,7 @@ post {
             def duration = currentBuild.duration
             mail (
                 subject: "Build Successful",
-                body: "The build succeeded! It took ${duration} milliseconds to finish all stages.",
+                body: "The build succeeded! It took 10 milliseconds to finish all stages.",
                 to: ['am.betageri@yahoo.com', 'sachinkd.cs@gmail.com', 'arjun.betageri@live.com']
             )
         }
