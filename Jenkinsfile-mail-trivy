@@ -54,15 +54,15 @@ pipeline{
                 def duration = currentBuild.duration
                 emailext (
                     subject: "Build Successful",
-                    body: "The build succeeded! It took ${duration} milliseconds to finish all stages.",
+                    body: "The build succeeded! It took milliseconds to finish all stages.",
                     to: "arjun.betageri@live.com",
                 )
             }
         }
         failure {
             emailext to: "arjun.betageri@live.com",
-            subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
+            subject: "jenkins build:failure",
+            body: "failed: Job More Info can be found here:"
         }
     }
 }
