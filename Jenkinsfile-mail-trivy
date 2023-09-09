@@ -50,19 +50,26 @@ pipeline{
     }
     post {
         success {
-            mail (
-                subject: "Build Successful",
-                body: "The build succeeded! It took 10 milliseconds to finish all stages.",
-                to: "sachinkd.cs@gmail.com",
-            )
+            script {
+                def duration = currentBuild.duration
+                emailext (
+                    subject: "Build Successful",
+                    body: "The build succeeded! It took ${duration} milliseconds to finish all stages.",
+                    to: "arjun.betageri@live.com",
+                )
+            }
         }
         failure {
-
-            mail (
-                subject: "Build Failure",
-                body: "Build  failed in stage: Error Message: ",
-                to: "am.betageri@yahoo.com",
+            script {
+                def buildNumber = currentBuild.number
+                def failedStage = currentBuild.currentBuild.displayName
+                def errorMessage = currentBuild.currentBuild.currentResult.toString()
+                emailext (
+                    subject: "Build Failure",
+                    body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
+                    to: "am.betageri@yahoo.com",
                 )
-       }
+            }
+        }
     }
 }
