@@ -60,7 +60,7 @@ pipeline{
 
             mail (
                 subject: "Build Failure",
-                body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
+                body: "Build  failed in stage: Error Message: ",
                 to: "am.betageri@yahoo.com",
                 )
        }
