@@ -178,7 +178,7 @@ post {
     success {
         script {
             def duration = currentBuild.duration
-            emailext (
+            mail (
                 subject: "Build Successful",
                 body: "The build succeeded! It took ${duration} milliseconds to finish all stages.",
                 to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com','arjun.betageri@live.com'
@@ -190,7 +190,7 @@ post {
             def buildNumber = currentBuild.number
             def failedStage = currentBuild.currentBuild.displayName
             def errorMessage = currentBuild.currentBuild.currentResult.toString()
-            emailext (
+            mail (
                 subject: "Build Failure",
                 body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
                 to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com','arjun.betageri@live.com'
