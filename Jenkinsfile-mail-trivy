@@ -105,7 +105,7 @@ pipeline{
                 emailext (
                     subject: "Build Successful",
                     body: "The build succeeded! It took ${duration} milliseconds to finish all stages.",
-                    to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com'
+                    to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com','arjun.betageri@live.com'
                 )
             }
         }
@@ -118,7 +118,7 @@ pipeline{
                 emailext (
                     subject: "Build Failure",
                     body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
-                    to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com'
+                    to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com','arjun.betageri@live.com'
                 )
             }
         }
