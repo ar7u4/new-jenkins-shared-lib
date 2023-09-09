@@ -52,7 +52,7 @@ pipeline{
         success {
             script {
                 def duration = currentBuild.duration
-                emailtext (
+                emailext (
                     subject: "Build Successful",
                     body: "The build succeeded! It took 10 milliseconds to finish all stages.",
                     to: ['am.betageri@yahoo.com', 'sachinkd.cs@gmail.com', 'arjun.betageri@live.com']
@@ -64,7 +64,7 @@ pipeline{
                 def buildNumber = currentBuild.number
                 def failedStage = currentBuild.currentBuild.displayName
                 def errorMessage = currentBuild.currentBuild.currentResult.toString()
-                emailtext (
+                emailext (
                     subject: "Build Failure",
                     body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
                     to: ['am.betageri@yahoo.com', 'sachinkd.cs@gmail.com', 'arjun.betageri@live.com']
