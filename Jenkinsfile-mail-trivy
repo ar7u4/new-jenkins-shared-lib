@@ -98,7 +98,7 @@ pipeline{
                }
             }
         }
-        post {
+    post {
         success {
             script {
                 def duration = currentBuild.duration
@@ -121,7 +121,7 @@ pipeline{
                     to: 'am.betageri@yahoo.com','sachinkd.cs@gmail.com','arjun.betageri@live.com'
                 )
             }
-        }
+       }
         // stage('Docker Image Push : DockerHub '){
         //  when { expression {  params.action == 'create' } }
         //     steps{
