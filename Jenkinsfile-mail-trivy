@@ -60,17 +60,9 @@ pipeline{
             }
         }
         failure {
-            script {
-                def buildNumber = currentBuild.number
-                def failedStage = currentBuild.displayName
-                def errorMessage = currentBuild.currentResult.toString()
-                emailext (
-                    subject: "Build Failure",
-                    body: "Build #${buildNumber} failed in stage: ${failedStage}\nError Message: ${errorMessage}",
-                    to: "am.betageri@yahoo.com",
-                )
-            }
+            emailext to: "arjun.betageri@live.com",
+            subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
         }
-
     }
 }
