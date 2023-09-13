@@ -53,9 +53,10 @@ pipeline{
             script {
                 def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
-				subject: "Build Success",
-				body: "Build  Console output is attached.",
+				subject: "Build Success: ${currentBuild.fullDisplayName}",
+				body: "Build ${currentBuild.fullDisplayName} succeeded.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
 				to: 'arjun.betageri@live.com',
+                attachmentsPattern: '**/*.log',
 				
                 )
             }
