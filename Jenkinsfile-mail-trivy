@@ -67,7 +67,7 @@ pipeline{
                 def gitLogs = sh(script: 'git log -5 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
 				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-				body: "Build ${currentBuild.fullDisplayName}${currentBuild.currentResult}.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
+				body: "Build ${currentBuild.fullDisplayName}${currentBuild.currentResult}.\n Failed stage: ${env.FAILED_STAGE}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
 				to: 'arjun.betageri@live.com',
 				attachmentsPattern: '**/*.log',
                 )
