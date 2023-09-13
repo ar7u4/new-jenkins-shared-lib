@@ -37,24 +37,24 @@ pipeline{
         //        }
         //     }
         // }
-         stage('Docker Image Scan: trivy '){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+    //      stage('Docker Image Scan: trivy '){
+    //      when { expression {  params.action == 'create' } }
+    //         steps{
+    //            script{
                    
-                   dockerimageScan("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-               }
-            }
-        }
+    //                dockerImageScan("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+    //            }
+    //         }
+    //     }
 
-    }
+    // }
     post {
         success {
             script {
-                def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
+                def gitLogs = sh(script: 'git log -5 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
 				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-				body: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}.",
+				body: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}.\n Here are the last 5 git logs:\n\n${gitLogs}.",
 				to: 'arjun.betageri@live.com',
                 attachmentsPattern: '**/*.log',
 				
@@ -64,7 +64,7 @@ pipeline{
         }
         failure {
             script {
-                def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
+                def gitLogs = sh(script: 'git log -5 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
 				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
 				body: "Build ${currentBuild.fullDisplayName}${currentBuild.currentResult}.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
