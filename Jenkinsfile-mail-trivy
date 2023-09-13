@@ -57,7 +57,7 @@ pipeline{
 				body: "Build ${currentBuild.fullDisplayName} succeeded.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
 				to: 'arjun.betageri@live.com',
 				attachmentsPattern: '**/*.log',
-
+                )
             }
              
         }
@@ -69,7 +69,7 @@ pipeline{
 				body: "Build ${currentBuild.fullDisplayName} succeeded.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
 				to: 'arjun.betageri@live.com',
 				attachmentsPattern: '**/*.log',
-
+                )
             }
         }
     }
