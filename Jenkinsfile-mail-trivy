@@ -52,7 +52,7 @@ pipeline{
         success {
             script {
                 def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
-				emailext (
+				mail (
 				subject: "Build Success",
 				body: "Build  Console output is attached.",
 				to: 'arjun.betageri@live.com',
