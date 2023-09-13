@@ -54,8 +54,8 @@ pipeline{
                 def gitLogs = sh(script: 'git log -5 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
 				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-				body: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}\n Success stage: ${env.FAILED_STAGE}.\n Here are the last 5 git logs:\n\n${gitLogs}.",
-				to: 'arjun.betageri@live.com',
+				body: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}\n Here are the last 5 git logs:\n\n${gitLogs}.",
+				to: 'arjun.betageri@live.com, akhil.boddula756@gmail.com',
                 attachmentsPattern: '**/*.log',
 				
                 )
@@ -67,8 +67,8 @@ pipeline{
                 def gitLogs = sh(script: 'git log -5 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
 				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-				body: "Build ${currentBuild.fullDisplayName}:${currentBuild.currentResult}.\n Failed stage: ${env.FAILED_STAGE}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
-				to: 'arjun.betageri@live.com',
+				body: "Build ${currentBuild.fullDisplayName}:${currentBuild.currentResult}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
+				to: 'arjun.betageri@live.com, akhil.boddula756@gmail.com',
 				attachmentsPattern: '**/*.log',
                 )
             }
