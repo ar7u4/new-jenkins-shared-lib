@@ -28,15 +28,15 @@ pipeline{
             )
             }
         }
-        stage('Docker Image Build'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+        // stage('Docker Image Build'){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
                    
-                   dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-               }
-            }
-        }
+        //            dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+        //        }
+        //     }
+        // }
         //  stage('Docker Image Scan: trivy '){
         //  when { expression {  params.action == 'create' } }
         //     steps{
@@ -50,16 +50,27 @@ pipeline{
     }
     post {
         success {
-                emailext (
-                    subject: "Build Successful",
-                    body: "The build succeeded! It took milliseconds to finish all stages.",
-                    to: "arjun.betageri@live.com",
-                )
+            script {
+                def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
+				emailext (
+				subject: "Build Success: ${currentBuild.fullDisplayName}",
+				body: "Build ${currentBuild.fullDisplayName} succeeded.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
+				to: 'arjun.betageri@live.com',
+				attachmentsPattern: '**/*.log',
+
+            }
+             
         }
         failure {
-            emailext to: "arjun.betageri@live.com",
-            subject: "jenkins build:failure",
-            body: "failed: Job More Info can be found here:"
+            script {
+                def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
+				emailext (
+				subject: "Build Success: ${currentBuild.fullDisplayName}",
+				body: "Build ${currentBuild.fullDisplayName} succeeded.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
+				to: 'arjun.betageri@live.com',
+				attachmentsPattern: '**/*.log',
+
+            }
         }
     }
 }
