@@ -53,8 +53,8 @@ pipeline{
             script {
                 def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
-				subject: "Build Success: jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-				body: "Build Succeded ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}.",
+				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+				body: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}.",
 				to: 'arjun.betageri@live.com',
                 attachmentsPattern: '**/*.log',
 				
@@ -66,8 +66,8 @@ pipeline{
             script {
                 def gitLogs = sh(script: 'git log -4 --pretty=format:"%h %an %s"', returnStdout: true).trim()
 				mail (
-				subject: "Build Success: ${currentBuild.fullDisplayName}",
-				body: "Build ${currentBuild.fullDisplayName} failed.\n ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+				subject: "Jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+				body: "Build ${currentBuild.fullDisplayName}${currentBuild.currentResult}.\n Pipeline triggered by ${env.BUILD_USER}.\n Here are the last 5 git logs:\n\n${gitLogs}.\n Console output is attached.",
 				to: 'arjun.betageri@live.com',
 				attachmentsPattern: '**/*.log',
                 )
